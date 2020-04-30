@@ -32,6 +32,10 @@ namespace DatingApp.API
 
             //1-) For CORS Support
             services.AddCors();
+
+            //AddSingleton da yapılabilirdi fakat her seferinde aynı context i kullanacak.
+            //AddScoped yaptığımızda context sadece scope içerisinde yaşayacak ve dispose olacak.
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
