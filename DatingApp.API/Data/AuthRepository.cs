@@ -61,13 +61,14 @@ namespace DatingApp.API.Data
 
         private bool VerifyPasswordHash(string pPassword, byte[] pPasswordHash, byte[] pPasswordSalt)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(pPasswordSalt))
             {
                 var computed_hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(pPassword));
 
                 for (int i = 0; i < computed_hash.Length; i++)
                 {
-                    if (computed_hash[i] != pPasswordHash[i]) return false;
+                    if (computed_hash[i] != pPasswordHash[i])
+                        return false;
                 }
             }
             return true;
