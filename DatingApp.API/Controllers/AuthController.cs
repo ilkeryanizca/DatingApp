@@ -35,6 +35,8 @@ namespace DatingApp.API.Controllers
             //Şeklinde de kontrol sağlanabilir data annotations için.
             //model(userForRegisterDto) in sol yanına [FromBody] eklendiği zaman null yerine empty string olarak değerler geliyor.
 
+
+
             userForRegisterDto.UserName = userForRegisterDto.UserName.ToLower();
 
             if (await _repo.UserExist(userForRegisterDto.UserName))
