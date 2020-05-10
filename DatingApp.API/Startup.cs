@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,14 +36,23 @@ namespace DatingApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(p => p.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+
+            // Before : services.AddControllers(); --we added json support with nuget - Microsoft.AspNetCore.Mvc.NewtonsoftJson
+            services.AddControllers().AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
             //1-) For CORS Support
             services.AddCors();
 
+            //After adding nuget, add services in here.
+            services.AddAutoMapper(typeof(DatingRepository));
+
             //AddSingleton da yapılabilirdi fakat her seferinde aynı context i kullanacak.
             //AddScoped yaptığımızda context sadece scope içerisinde yaşayacak ve dispose olacak.
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDatingRepository, DatingRepository>();
 
             //1-) For Use JWT Auth
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(p =>

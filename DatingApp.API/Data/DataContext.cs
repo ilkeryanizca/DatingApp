@@ -5,9 +5,13 @@ namespace DatingApp.API.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options){}
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+
+        // Add Migration : dotnet ef migrations add 'name of migration'
+        // Update DB     : dotnet ef database update
 
         public DbSet<Value> Values { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }
