@@ -46,6 +46,9 @@ namespace DatingApp.API
             //1-) For CORS Support
             services.AddCors();
 
+            //Helpers içerisine 'CloudinarySettings.cs' oluşturuldu, class çağırıldığında ayarlar ile beraber gelmesi için.
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
             //After adding nuget, add services in here.
             services.AddAutoMapper(typeof(DatingRepository));
 
