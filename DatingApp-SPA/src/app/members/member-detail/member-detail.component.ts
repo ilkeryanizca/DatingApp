@@ -39,15 +39,17 @@ export class MemberDetailComponent implements OnInit {
 
   getImages() {
     const imageUrls = [];
-    for (const item of this.user.photos) {
+
+    this.user.photos.forEach(item => {
       imageUrls.push({
         small: item.url,
         medium: item.url,
         big: item.url,
         description: item.description
       });
-      return imageUrls;
-    }
+    });
+
+    return imageUrls;
   }
   // loadUser() {
   //   this.userService.getUser(+this.route.snapshot.params['id']).subscribe((user: User) => {

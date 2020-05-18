@@ -91,8 +91,7 @@ namespace DatingApp.API.Controllers
                 return CreatedAtRoute("GetPhoto", new { userId = userId, id = photo.Id }, photoToReturn);
             }
 
-
-            return BadRequest("Coud not add the photo");
+            return BadRequest("Coud not add the photo.");
         }
     }
 }
