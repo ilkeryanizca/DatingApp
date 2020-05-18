@@ -14,9 +14,9 @@ using Microsoft.Extensions.Options;
 
 namespace DatingApp.API.Controllers
 {
-
     [Authorize]
-    [Route("api/user/{userId}/photos")]
+    [Route("api/users/{userId}/photos")]
+    [ApiController]
     public class PhotosController : ControllerBase
     {
         private Cloudinary _cloudinary;
@@ -47,7 +47,7 @@ namespace DatingApp.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddPhotoUser(int userId, PhotoForCreationDto photoForCreationDto)
+        public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
@@ -78,18 +78,19 @@ namespace DatingApp.API.Controllers
             var photo = _mapper.Map<Photo>(photoForCreationDto);
 
             if (!userFromRepo.Photos.Any(p => p.IsMain))
-            {
                 photo.IsMain = true;
 
-                userFromRepo.Photos.Add(photo);
+            userFromRepo.Photos.Add(photo);
 
-                if (await _repo.SaveAll())
-                {
-                    var photoToReturn = _mapper.Map<PhotoForReturnDto>(photo);
+            if (await _repo.SaveAll())
+            {
+                var photoToReturn = _mapper.Map<PhotoForReturnDto>(photo);
 
-                    return CreatedAtRoute("GetPhoto", new { userId = userId, id = photo.Id }, photoToReturn);
-                }
+                //Response Header içerisinde 'Content-Type'(application/json; charset=utf-8) && 
+                //                           'Location'(http://localhost:5000/api/users/6/photos/47) bilgisi dönmesi için.
+                return CreatedAtRoute("GetPhoto", new { userId = userId, id = photo.Id }, photoToReturn);
             }
+
 
             return BadRequest("Coud not add the photo");
         }
