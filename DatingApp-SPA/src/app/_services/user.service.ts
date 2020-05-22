@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
-import { PagenatedResult } from '../_models/Pagination';
+import { PaginatedResult } from '../_models/Pagination';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(page?, itemsPerPage?): Observable<PagenatedResult<User[]>> {
-    const paginatedResult: PagenatedResult<User[]> = new PagenatedResult<User[]>();
+  getUsers(page?, itemsPerPage?): Observable<PaginatedResult<User[]>> {
+    const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
 
     let params = new HttpParams();
     if (page != null && itemsPerPage != null) {
