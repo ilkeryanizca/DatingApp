@@ -33,6 +33,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { ListsResolver } from './_resolvers/list.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 export function getToken() {
    return localStorage.getItem('token');
@@ -44,14 +45,14 @@ export function getToken() {
       NavComponent,
       HomeComponent,
       RegisterComponent,
-
       MemberListComponent,
       ListsComponent,
       MessagesComponent,
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      MemberMessagesComponent
    ],
    imports: [
       BrowserModule,

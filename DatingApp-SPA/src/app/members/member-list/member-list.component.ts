@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Pagination } from 'src/app/_models/Pagination';
 import { PaginatedResult } from '../../_models/Pagination';
 
+
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.component.html',
