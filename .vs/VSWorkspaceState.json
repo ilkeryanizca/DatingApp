@@ -1,14 +1,4 @@
 {
-  "ExpandedNodes": [
-    "",
-    "\\DatingApp-SPA",
-    "\\DatingApp-SPA\\src",
-    "\\DatingApp-SPA\\src\\app",
-    "\\DatingApp-SPA\\src\\app\\members",
-    "\\DatingApp-SPA\\src\\app\\members\\member-edit",
-    "\\DatingApp.API",
-    "\\DatingApp.API\\Controllers"
-  ],
-  "SelectedNode": "\\DatingApp-SPA\\src\\app\\members\\member-edit\\member-edit.component.html",
+  "ExpandedNodes": [],
   "PreviewInSolutionExplorer": false
 }

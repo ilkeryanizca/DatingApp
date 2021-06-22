@@ -30,12 +30,26 @@ namespace DatingApp.API
             Configuration = configuration;
         }
 
+        // public void ConfigureDevelopmentServices(IServiceCollection services)
+        // {
+        //     services.AddDbContext<DataContext>(p => p.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+        //     ConfigureServices(services);
+        // }
+
+        // public void ConfigureProductionServices(IServiceCollection services)
+        // {
+        //     services.AddDbContext<DataContext>(p => p.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        //     ConfigureServices(services);
+        // }
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(p => p.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(p => p.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Before : services.AddControllers(); --we added json support with nuget - Microsoft.AspNetCore.Mvc.NewtonsoftJson
             services.AddControllers().AddNewtonsoftJson(opt =>
@@ -81,6 +95,8 @@ namespace DatingApp.API
             }
             else
             {
+                app.UseDeveloperExceptionPage();
+                
                 app.UseExceptionHandler(builder =>
                 {
                     builder.Run(async context =>
@@ -110,11 +126,15 @@ namespace DatingApp.API
             //2-) For CORS Support
             app.UseCors(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
